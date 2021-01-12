@@ -7,6 +7,7 @@ GLFWwindow* window{ nullptr };
 
 int main()
 {
+
 	if (!glfwInit())
 	{
 		std::cout << "Не удалось инициализировать GLFW" << std::endl;
