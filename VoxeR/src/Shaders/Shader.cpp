@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstring>
 
+
 Shader::Shader::Shader(ShaderType type) : ready(false)
 {
 	shader = glCreateShader(static_cast<GLenum>(type));
