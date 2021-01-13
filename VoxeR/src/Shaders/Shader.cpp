@@ -11,8 +11,19 @@ Shader::Shader::Shader(ShaderType type) : ready(false)
 
 bool Shader::Shader::loadAndCompile(const char* path_to_source)
 {
+	/* Если шейдер уже готов, то нам нет смысла готовить его еще раз */
 	if (ready)
-		return true;
+	{
+		strncpy(log, "Shader is ready already", MAX_LOG_SIZE);
+		return false;
+	}
+		
+	/* Если вдруг имя файла шейдера не просто пустое, а nullptr, то где-то случилось говно */
+	if (!path_to_source)
+	{
+		strncpy(log, "Filename is pointing to nullptr", MAX_LOG_SIZE);
+		return false;
+	}
 
 	std::ifstream src_file;
 	char* src;
@@ -96,6 +107,7 @@ bool Shader::Program::linkShaders()
 	glLinkProgram(program);
 
 	glGetProgramiv(program, GL_LINK_STATUS, &success);
+
 	if (success)
 		return true;
 	else
