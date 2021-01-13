@@ -1,6 +1,8 @@
 #include "Shader.h"
 
 #include <fstream>
+#include <cstring>
+
 
 Shader::Shader::Shader(ShaderType type) : ready(false)
 {
