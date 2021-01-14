@@ -1,6 +1,8 @@
 add_executable(
 				voxer
 				src/main.cpp
+				src/Window/Window.h src/Window/Window.cpp
+				src/Window/Events.h src/Window/Events.cpp
 				src/Shaders/Shader.h src/Shaders/Shader.cpp)
 
 target_link_libraries(voxer PUBLIC glfw glad)
