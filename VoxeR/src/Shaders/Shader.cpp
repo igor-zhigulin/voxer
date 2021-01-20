@@ -87,6 +87,7 @@ GLuint Shader::Shader::getShader() const
 }
 
 Shader::Program::Program()
+	: ready(false)
 {
 	program = glCreateProgram();
 }
@@ -111,12 +112,134 @@ bool Shader::Program::linkShaders()
 	glGetProgramiv(program, GL_LINK_STATUS, &success);
 
 	if (success)
-		return true;
-	else
-		return false;
+		ready = true;
+	return success;
 }
 
-void Shader::Program::use() const
+bool Shader::Program::use() const
 {
+	if (!ready)
+		return false;
 	glUseProgram(program);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLfloat v0)
+{
+	if (!use())
+		return false;
+	glUniform1f(location, v0);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLfloat v0, GLfloat v1)
+{
+	if (!use())
+		return false;
+	glUniform2f(location, v0, v1);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)
+{
+	if (!use())
+		return false;
+	glUniform3f(location, v0, v1, v2);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
+{
+	if (!use())
+		return false;
+	glUniform4f(location, v0, v1, v2, v3);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLint v0)
+{
+	if (!use())
+		return false;
+	glUniform1i(location, v0);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLint v0, GLint v1)
+{
+	if (!use())
+		return false;
+	glUniform2i(location, v0, v1);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLint v0, GLint v1, GLint v2)
+{
+	if (!use())
+		return false;
+	glUniform3i(location, v0, v1, v2);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)
+{
+	if (!use())
+		return false;
+	glUniform4i(location, v0, v1, v2, v3);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLuint v0)
+{
+	if (!use())
+		return false;
+	glUniform1ui(location, v0);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLuint v0, GLuint v1)
+{
+	if (!use())
+		return false;
+	glUniform2ui(location, v0, v1);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLuint v0, GLuint v1, GLuint v2)
+{
+	if (!use())
+		return false;
+	glUniform3ui(location, v0, v1, v2);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3)
+{
+	if (!use())
+		return false;
+	glUniform4ui(location, v0, v1, v2, v3);
+	return true;
+}
+
+bool Shader::Program::uniform(GLint location, GLsizei count, int size, const GLfloat* value)
+{
+	if (!use() || !value || count <= 0 || location < 0)
+		return false;
+	switch (size)
+	{
+	case 1:
+		glUniform1fv(location, count, value);
+		break;
+	case 2:
+		glUniform2fv(location, count, value);
+		break;
+	case 3:
+		glUniform3fv(location, count, value);
+		break;
+	case 4:
+		glUniform4fv(location, count, value);
+		break;
+	default:
+		return false;
+	}
+	return true;
 }
