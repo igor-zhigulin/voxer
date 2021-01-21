@@ -60,10 +60,13 @@ namespace Shader
 		bool uniform(GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
 
 		bool uniform(GLint location, GLsizei count, int size, const GLfloat* value);
-		bool uniform(GLint location, GLsizei count, const GLint* value);
-		bool uniform(GLint location, GLsizei count, const GLuint* value);
+		bool uniform(GLint location, GLsizei count, int size, const GLint* value);
+		bool uniform(GLint location, GLsizei count, int size, const GLuint* value);
 
 		bool uniform(GLint location, GLsizei count, GLboolean transpose, int rows, int cols, const GLfloat* value);
+
+		GLint getUniformLocation(const char* uniform_name) const;
+		GLint getAttribLocation(const char* attribute_name) const;
 	};
 
 }
